@@ -6,7 +6,6 @@ plugins {
 }
 
 group = "io.iohk.atala"
-version = "0.0.1"
 
 repositories {
     mavenCentral()
