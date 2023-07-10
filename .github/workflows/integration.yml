@@ -1,28 +1,21 @@
 name: Atala QA CI
 
 on:
-  pull_request:
-
-env:
-  GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
+  push:
+    branches:
+      - "main"
 
 jobs:
-  build-and-test-enterprise-services:
+  build-and-test:
     name: "Build and test"
     runs-on: ubuntu-latest
 
     steps:
+      - name: Gradle Build Action
+        uses: gradle/gradle-build-action@v2
+
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-
-      - name: Run Dockerfile linting
-        run: npm run lint:dockerfile
-
-      - name: Check test coverage
-        run: npm run coverage:total && npm run coverage:check
-
-      - name: Run OAS lint
-        run: npx @stoplight/spectral-cli lint "enterprise-services/api-spec/enterprise-services-spec.yml"
+      - name: Test
+        run: ./gradlew test

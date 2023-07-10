@@ -45,6 +45,16 @@ publishing {
             from(components["java"])
         }
     }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/amagyar-iohk/prism-client-generator")
+            credentials {
+                username = System.getenv("ATALA_GITHUB_ACTOR")
+                password = System.getenv("ATALA_GITHUB_TOKEN")
+            }
+        }
+    }
 }
 
 kotlin {
