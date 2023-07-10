@@ -1,0 +1,28 @@
+name: Atala QA CI
+
+on:
+  pull_request:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
+
+jobs:
+  build-and-test-enterprise-services:
+    name: "Build and test"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+
+      - name: Run Dockerfile linting
+        run: npm run lint:dockerfile
+
+      - name: Check test coverage
+        run: npm run coverage:total && npm run coverage:check
+
+      - name: Run OAS lint
+        run: npx @stoplight/spectral-cli lint "enterprise-services/api-spec/enterprise-services-spec.yml"

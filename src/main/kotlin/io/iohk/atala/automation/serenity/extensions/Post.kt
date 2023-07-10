@@ -1,4 +1,4 @@
-package io.iohk.atala.automation.extensions
+package io.iohk.atala.automation.serenity.extensions
 
 import net.serenitybdd.screenplay.rest.interactions.Post
 import net.serenitybdd.screenplay.rest.interactions.RestInteraction

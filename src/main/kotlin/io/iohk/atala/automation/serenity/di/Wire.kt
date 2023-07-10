@@ -1,5 +1,8 @@
 package io.iohk.atala.automation.serenity.di
 
-@Target(AnnotationTarget.FIELD)
-@Retention(AnnotationRetention.RUNTIME)
+import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.FIELD
+
+@Target(FIELD)
+@Retention(RUNTIME)
 annotation class Wire

@@ -5,6 +5,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import net.serenitybdd.screenplay.Actor
+import net.serenitybdd.screenplay.Interaction
 import net.serenitybdd.screenplay.Question
 import net.serenitybdd.screenplay.SilentInteraction
 import org.hamcrest.Matcher
@@ -30,7 +31,7 @@ class PollingWait<T>(
             return PollingWait(question, matcher, upto, polling)
         }
 
-        fun waitFor(duration: Duration): PollingWaitBuilder {
+        fun upTo(duration: Duration): PollingWaitBuilder {
             this.upto = duration
             return this
         }
@@ -42,7 +43,7 @@ class PollingWait<T>(
     }
 
     companion object {
-        fun waitFor(duration: Duration): PollingWaitBuilder {
+        fun upTo(duration: Duration): PollingWaitBuilder {
             return PollingWaitBuilder(upto = duration)
         }
 

@@ -36,9 +36,6 @@ object Ensure {
     fun <A> that(description: String, question: Question<Collection<A>>) = That(description, question)
     fun <A> that(question: Question<Collection<A>>) = That(question)
 
-    fun <A> thatTheListOf(description: String, question: Question<List<A>>) = ThatTheListOf(description, question)
-    fun <A> thatTheListOf(question: Question<List<A>>) = ThatTheListOf(question)
-
     fun thatTheCurrentPage() = ThatTheCurrentPage()
     fun that(value: SerenityTarget) = That(value)
     fun that(value: By) = net.serenitybdd.screenplay.ensure.that(value)
@@ -46,9 +43,6 @@ object Ensure {
     // Collection matchers
     fun thatTheListOf(value: SerenityTarget) = ThatTheListOf(value)
     fun thatTheListOf(value: By) = ThatTheListOf(value)
-
-    fun thatAmongst(value: SerenityTarget) = ThatAmongst(value)
-    fun thatAmongst(value: By) = ThatAmongst(value)
 
     fun enableSoftAssertions() = EnableSoftAssertions()
     fun reportSoftAssertions() = ReportSoftAssertions()

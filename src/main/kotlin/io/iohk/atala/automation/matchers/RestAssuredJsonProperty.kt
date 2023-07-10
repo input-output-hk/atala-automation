@@ -1,10 +1,10 @@
-package io.iohk.atala.automation.serenity.expect
+package io.iohk.atala.automation.matchers
 
 import io.restassured.path.json.JsonPath
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
-object JsonProperty {
+object RestAssuredJsonProperty {
     fun toBe(jsonPath: String, expected: String): TypeSafeMatcher<JsonPath> {
         return object: TypeSafeMatcher<JsonPath>() {
             override fun describeTo(description: Description) {

@@ -18,12 +18,12 @@ object Utils {
         return Injectors.getInjector().getInstance(T::class.java)
     }
 
-    fun <T : Any> lastResponseObject(path: String, clazz: KClass<T>): T {
-        return SerenityRest.lastResponse().jsonPath().getObject(path, clazz.java)
+    inline fun <reified T : Any> lastResponseObject(path: String = ""): T {
+        return SerenityRest.lastResponse().jsonPath().getObject(path, T::class.java)
     }
 
-    fun <T : Any> lastResponseList(path: String, clazz: KClass<T>): List<T> {
-        return SerenityRest.lastResponse().jsonPath().getList(path, clazz.java)
+    inline fun <reified T : Any> lastResponseList(path: String = ""): List<T> {
+        return SerenityRest.lastResponse().jsonPath().getList(path, T::class.java)
     }
 
     fun toJsonPath(any: Any) : DocumentContext {

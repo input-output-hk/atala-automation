@@ -30,6 +30,8 @@ dependencies {
 
     api("org.jetbrains.kotlin:kotlin-reflect:1.8.22")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+
+    testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
 }
 
 java {
@@ -43,10 +45,6 @@ publishing {
             from(components["java"])
         }
     }
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 kotlin {
