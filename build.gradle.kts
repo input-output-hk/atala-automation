@@ -48,7 +48,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/amagyar-iohk/prism-client-generator")
+            url = uri("https://maven.pkg.github.com/input-output-hk/atala-automation")
             credentials {
                 username = System.getenv("ATALA_GITHUB_ACTOR")
                 password = System.getenv("ATALA_GITHUB_TOKEN")
