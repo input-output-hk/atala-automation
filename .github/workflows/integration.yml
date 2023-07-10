@@ -1,7 +1,7 @@
 name: Atala QA CI
 
 on:
-  push:
+  pull_request:
     branches:
       - "main"
 
