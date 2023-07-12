@@ -24,8 +24,8 @@ dependencies {
     api("org.slf4j:slf4j-api:2.0.7")
 
     api("io.ktor:ktor-client-core-jvm:2.3.1")
-
     api("com.jayway.jsonpath:json-path:2.8.0")
+    api("org.awaitility:awaitility:4.2.0")
 
     api("org.jetbrains.kotlin:kotlin-reflect:1.8.22")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")

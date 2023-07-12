@@ -5,9 +5,12 @@ import net.serenitybdd.rest.SerenityRest
 import net.serenitybdd.screenplay.Question
 import net.serenitybdd.screenplay.rest.interactions.Get
 
+/**
+ * Answerable questions about HttpRequest
+ */
 object HttpRequest {
     /**
-     * Returns a question about the response of the GET request using RestAssured JsonPath.
+     * Answers a Get request.
      */
     fun get(url: String): Question<JsonPath> {
         return Question.about("get response body").answeredBy { actor ->

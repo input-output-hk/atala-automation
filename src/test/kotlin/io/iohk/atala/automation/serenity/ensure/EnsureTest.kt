@@ -1,10 +1,9 @@
 package io.iohk.atala.automation.serenity.ensure
 
-import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration
+import io.iohk.atala.automation.WithMockServer
 import net.serenitybdd.core.Serenity
 import net.serenitybdd.core.pages.PageObject
+import net.serenitybdd.rest.SerenityRest
 import net.serenitybdd.screenplay.Actor
 import net.serenitybdd.screenplay.Question
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb
@@ -28,7 +27,7 @@ import java.time.LocalTime
 import java.util.*
 
 
-class EnsureTest {
+class EnsureTest : WithMockServer() {
     @DefaultUrl("classpath:test.html")
     private class TestPage : PageObject()
 
@@ -113,26 +112,23 @@ class EnsureTest {
     @Test
     fun `Ensure should be able to check SerenityRest lastResponse()`() {
         val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
-        val wireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
-        wireMockServer.start()
-
-        WireMock.stubFor(
-            WireMock.get(WireMock.urlEqualTo("/"))
-                .willReturn(
-                    WireMock.aResponse()
-                        .withStatus(200)
-                        .withHeader("Content-Type", "application/json")
-                        .withBody("""{ "field": "response" }""")
-                )
-        )
-
         actor.attemptsTo(
-            Get.resource("/"),
+            Get.resource("/field"),
             Ensure.thatTheLastResponse().statusCode().isEqualTo(200),
             Ensure.thatTheLastResponse().contentType().isEqualTo("application/json")
         )
+    }
 
-        wireMockServer.stop()
+    @Test
+    fun `Ensure should thrown an exception if SerenityRest lastResponse is null`() {
+        SerenityRest.reset()
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
+        val exception = assertThrows(AssertionError::class.java) {
+            actor.attemptsTo(
+                Ensure.thatTheLastResponse().contentType().isEqualTo("application/json")
+            )
+        }
+        assertThat(exception.message, containsString("Couldn't find the last response"))
     }
 
     @Test

@@ -1,8 +1,6 @@
 package io.iohk.atala.automation.serenity.questions
 
-import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration
+import io.iohk.atala.automation.WithMockServer
 import net.serenitybdd.core.Serenity
 import net.serenitybdd.screenplay.Actor
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi
@@ -12,7 +10,8 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class HttpRequestTest {
+class HttpRequestTest : WithMockServer() {
+
     @Before
     fun setup() {
         Serenity.initialize(this)
@@ -26,20 +25,8 @@ class HttpRequestTest {
 
     @Test
     fun `Question about HttpRequest call`() {
-        val wireMockServer = WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
-        wireMockServer.start()
-        WireMock.stubFor(
-            WireMock.get(WireMock.urlEqualTo("/"))
-                .willReturn(
-                    WireMock.aResponse().withStatus(200)
-                )
-        )
-
         val actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
         HttpRequest.get("/").answeredBy(actor)
-
-        wireMockServer.stop()
-
     }
 
     @Test

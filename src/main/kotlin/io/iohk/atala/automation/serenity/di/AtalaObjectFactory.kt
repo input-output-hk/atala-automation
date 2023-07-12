@@ -8,10 +8,17 @@ import net.serenitybdd.core.annotations.events.BeforeScenario
 import net.serenitybdd.core.lifecycle.LifecycleRegister
 import net.thucydides.core.steps.StepEventBus
 import java.util.*
+import javax.inject.Inject
 import kotlin.reflect.KClass
-import kotlin.reflect.full.*
+import kotlin.reflect.full.cast
+import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.isAccessible
 
+/**
+ * Object Factory class used for Dependency Injection (DI).
+ *
+ * This class is exposed through SPI.
+ */
 class AtalaObjectFactory : ObjectFactory {
     companion object {
         private val classes = Collections.synchronizedSet(HashSet<Class<*>>())
@@ -66,7 +73,7 @@ class AtalaObjectFactory : ObjectFactory {
         private fun inject(instance: Any) {
             val fields = instance.javaClass.declaredFields
             for (field in fields) {
-                if (field.isAnnotationPresent(Wire::class.java)) {
+                if (field.isAnnotationPresent(Inject::class.java)) {
                     val injection = getInstance(field.type.kotlin)
                     val default = field.canAccess(instance)
                     field.isAccessible = true
@@ -78,6 +85,7 @@ class AtalaObjectFactory : ObjectFactory {
     }
 
     override fun start() {}
+
     override fun stop() {
         instances.clear()
         Serenity.done(false)

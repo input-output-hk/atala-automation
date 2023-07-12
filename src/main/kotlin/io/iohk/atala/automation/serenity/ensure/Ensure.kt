@@ -4,15 +4,17 @@ import net.serenitybdd.screenplay.Question
 import org.openqa.selenium.By
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.Optional
+import java.util.*
 import net.serenitybdd.screenplay.ensure.enableSoftAssertions as EnableSoftAssertions
 import net.serenitybdd.screenplay.ensure.reportSoftAssertions as ReportSoftAssertions
 import net.serenitybdd.screenplay.ensure.that as That
-import net.serenitybdd.screenplay.ensure.thatAmongst as ThatAmongst
 import net.serenitybdd.screenplay.ensure.thatTheCurrentPage as ThatTheCurrentPage
 import net.serenitybdd.screenplay.ensure.thatTheListOf as ThatTheListOf
 import net.serenitybdd.screenplay.targets.Target as SerenityTarget
 
+/**
+ * Centralization of the Ensure methods in a singleton class.
+ */
 object Ensure {
     fun that(value: String) = That(value)
     fun that(value: LocalDate) = That(value)
@@ -20,7 +22,7 @@ object Ensure {
     fun that(value: Boolean) = That(value)
     fun that(value: Float) = That(value)
     fun that(value: Double) = That(value)
-    fun thatTheLastResponse() = RestResponseEnsure()
+    fun thatTheLastResponse() = LastResponseEnsure()
     fun <A> that(optional: Optional<A>) = OptionalEnsure(optional)
 
     fun <A> that(value: Comparable<A>) = That(value)

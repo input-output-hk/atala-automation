@@ -1,24 +1,29 @@
 package io.iohk.atala.automation.serenity.interactions
 
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
+import io.iohk.atala.automation.Utils
 import net.serenitybdd.screenplay.Actor
-import net.serenitybdd.screenplay.Interaction
 import net.serenitybdd.screenplay.Question
 import net.serenitybdd.screenplay.SilentInteraction
+import org.awaitility.core.ConditionTimeoutException
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.junit.Assert
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
+/**
+ * Polling wait for condition for [Actor.attemptsTo].
+ *
+ * @param question answerable question from actor
+ * @param matcher condition for validation
+ * @param timeout maximum time to wait
+ * @param pollInterval polling interval
+ */
 class PollingWait<T>(
     private val question: Question<T>,
     private val matcher: Matcher<T>,
-    private val upto: Duration,
-    private val polling: Duration
+    private val timeout: Duration,
+    private val pollInterval: Duration
 ) : SilentInteraction() {
     class PollingWaitBuilder(
         private var upto: Duration = 30.seconds,
@@ -60,22 +65,18 @@ class PollingWait<T>(
     }
 
     override fun <T : Actor> performAs(actor: T) {
-        runBlocking {
-            try {
-                withTimeout(upto) {
-                    while (true) {
-                        try {
-                            val answer = question.answeredBy(actor)
-                            MatcherAssert.assertThat(answer, matcher)
-                            break
-                        } catch (e: AssertionError) {
-                            delay(polling)
-                        }
-                    }
+        try {
+            Utils.waitUntil(timeout, pollInterval) {
+                try {
+                    val answer = question.answeredBy(actor)
+                    MatcherAssert.assertThat(answer, matcher)
+                    true
+                } catch (e: AssertionError) {
+                    false
                 }
-            } catch (e: CancellationException) {
-                Assert.fail("Timeout [$upto] exceeded to [${question.subject}] be [$matcher].")
             }
+        } catch (e: ConditionTimeoutException) {
+            Assert.fail("Timeout [$timeout] exceeded to [${question.subject}] be [$matcher].")
         }
     }
 }

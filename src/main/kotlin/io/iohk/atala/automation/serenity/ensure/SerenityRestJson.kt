@@ -2,6 +2,12 @@ package io.iohk.atala.automation.serenity.ensure
 
 import net.serenitybdd.rest.SerenityRest
 
+/**
+ * It's not possible to turn [SerenityRest.lastResponse] to JsonPath.
+ *
+ * This class aims to simplify the object, so we can parse it to JsonPath
+ * and get the attributes through xpath.
+ */
 class SerenityRestJson {
     val statusCode: Int
     val contentType: String

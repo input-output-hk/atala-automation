@@ -2,12 +2,11 @@ package io.iohk.atala.automation.serenity.configuration
 
 import io.cucumber.core.exception.CucumberException
 import io.iohk.atala.automation.serenity.di.AtalaObjectFactory
-import io.iohk.atala.automation.serenity.di.Wire
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Test
+import javax.inject.Inject
 
 class AtalaObjectFactoryTest {
     object ObjectTestClass
@@ -18,7 +17,7 @@ class AtalaObjectFactoryTest {
         val test = "Test"
     }
     class Injected {
-        @Wire
+        @Inject
         lateinit var injectable: Injectable
     }
 
@@ -53,7 +52,7 @@ class AtalaObjectFactoryTest {
     }
 
     @Test
-    fun `AtalaObjectFactory should inject @Wire instances`() {
+    fun `AtalaObjectFactory should inject @Inject instances`() {
         val injected = AtalaObjectFactory.getInstance(Injected::class)
         assertThat(injected.injectable, notNullValue())
         assertThat(injected.injectable.test, equalTo("Test"))

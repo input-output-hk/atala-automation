@@ -38,7 +38,7 @@ class PollingWaitTest {
     @ExperimentalTime
     fun `Actor using PollingWait should not poll if condition is already met`() {
         val timeout = 1.minutes
-        val polling = 1.minutes
+        val polling = 500.milliseconds
 
         val delta = measureTime {
             val actor = Actor.named("Test")
