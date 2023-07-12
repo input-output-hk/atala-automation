@@ -167,10 +167,7 @@ build/
 target
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea
 *.iws
 *.iml
 *.ipr
@@ -203,5 +200,5 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### Node ###
 node_modules
-.idea
