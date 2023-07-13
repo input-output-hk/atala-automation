@@ -1,8 +1,10 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     kotlin("jvm") version "1.8.21"
-    java
     `java-library`
     `maven-publish`
+    id("io.gitlab.arturbosch.detekt") version "1.23.0"
 }
 
 group = "io.iohk.atala"
@@ -33,6 +35,9 @@ dependencies {
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
 }
 
+kotlin {
+}
+
 java {
     withJavadocJar()
     withSourcesJar()
@@ -58,4 +63,9 @@ publishing {
 
 kotlin {
     jvmToolchain(11)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom("detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
 }

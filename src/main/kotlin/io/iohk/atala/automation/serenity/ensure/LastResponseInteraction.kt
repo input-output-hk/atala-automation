@@ -3,8 +3,9 @@ package io.iohk.atala.automation.serenity.ensure
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jayway.jsonpath.JsonPath
 import net.serenitybdd.screenplay.Actor
-import net.serenitybdd.screenplay.Performable
-import net.serenitybdd.screenplay.ensure.*
+import net.serenitybdd.screenplay.Interaction
+import net.serenitybdd.screenplay.ensure.Expectation
+import net.serenitybdd.screenplay.ensure.KnownValue
 import net.thucydides.core.annotations.Step
 
 /**
@@ -14,13 +15,13 @@ import net.thucydides.core.annotations.Step
  * @param expected expected value for the current field
  * @param expectation matcher to validate the field
  */
-class LastResponsePerformable<A : Comparable<A>>(
+class LastResponseInteraction<A : Comparable<A>>(
     private val jsonPath: String,
     private val expected: A,
     private val expectation: Expectation<((Actor) -> Comparable<A>?)?, A>,
-) : Performable {
+) : Interaction {
     private val expectedDescription = "SerenityRest.lastResponse().${jsonPath}"
-    private val description = expectation.describe(expected, false, expectedDescription);
+    val description = expectation.describe(expected, false, expectedDescription);
 
     @Step("{0} should see that #description")
     override fun <T : Actor?> performAs(actor: T) {

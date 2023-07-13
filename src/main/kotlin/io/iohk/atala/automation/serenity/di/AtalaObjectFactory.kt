@@ -10,6 +10,7 @@ import net.thucydides.core.steps.StepEventBus
 import java.util.*
 import javax.inject.Inject
 import kotlin.reflect.KClass
+import kotlin.reflect.full.IllegalCallableAccessException
 import kotlin.reflect.full.cast
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.isAccessible
@@ -57,16 +58,13 @@ class AtalaObjectFactory : ObjectFactory {
             val constructor = type.primaryConstructor
             try {
                 return constructor!!.call()
-            } catch (e: Exception) {
-                val typeName = type.qualifiedName
-                if (constructor == null) {
-                    throw CucumberException("$typeName has no constructor", e)
-                } else if (constructor.parameters.isNotEmpty()) {
-                    throw CucumberException("$typeName should have an empty constructor", e)
-                } else if (!constructor.isAccessible) {
-                    throw CucumberException("$typeName constructor is not accessible", e)
-                }
-                throw e
+            } catch (e: IllegalCallableAccessException) {
+                throw CucumberException("${type.qualifiedName} constructor is not accessible", e)
+            } catch (e: NullPointerException) {
+                throw CucumberException("${type.qualifiedName} has no constructor", e)
+            } catch (e: IllegalArgumentException) {
+                throw CucumberException("${type.qualifiedName} should have an empty constructor", e)
+
             }
         }
 
@@ -84,7 +82,9 @@ class AtalaObjectFactory : ObjectFactory {
         }
     }
 
-    override fun start() {}
+    override fun start() {
+        instances.clear()
+    }
 
     override fun stop() {
         instances.clear()

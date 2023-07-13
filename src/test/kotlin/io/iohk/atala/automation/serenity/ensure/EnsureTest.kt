@@ -15,6 +15,7 @@ import net.thucydides.core.annotations.DefaultUrl
 import net.thucydides.core.annotations.Managed
 import net.thucydides.core.steps.StepEventBus
 import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Assert.assertThrows
@@ -121,7 +122,9 @@ class EnsureTest : WithMockServer() {
 
     @Test
     fun `Ensure should thrown an exception if SerenityRest lastResponse is null`() {
-        SerenityRest.reset()
+        // clears any previous request
+        SerenityRest.clear()
+
         val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
         val exception = assertThrows(AssertionError::class.java) {
             actor.attemptsTo(
@@ -129,6 +132,12 @@ class EnsureTest : WithMockServer() {
             )
         }
         assertThat(exception.message, containsString("Couldn't find the last response"))
+    }
+
+    @Test
+    fun `LastResponseInteraction should have a description`() {
+        val interaction = Ensure.thatTheLastResponse().statusCode().isEqualTo(1)
+        assertThat(interaction.description, equalTo("SerenityRest.lastResponse().statusCode that is equal to: <1>"))
     }
 
     @Test

@@ -57,4 +57,10 @@ class AtalaObjectFactoryTest {
         assertThat(injected.injectable, notNullValue())
         assertThat(injected.injectable.test, equalTo("Test"))
     }
+
+    @Test
+    fun `AtalaObjectFactory should able to create new instance`() {
+        val test = AtalaObjectFactory.getInstance(TestClass::class)
+        assertThat(test, notNullValue())
+    }
 }

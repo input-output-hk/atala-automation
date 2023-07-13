@@ -1,6 +1,6 @@
 package io.iohk.atala.automation.serenity.interactions
 
-import io.iohk.atala.automation.Utils
+import io.iohk.atala.automation.utils.Wait
 import net.serenitybdd.screenplay.Actor
 import net.serenitybdd.screenplay.Question
 import net.serenitybdd.screenplay.SilentInteraction
@@ -9,11 +9,19 @@ import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.junit.Assert
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 /**
  * Polling wait for condition for [Actor.attemptsTo].
  *
+ * Usage example:
+ * ```
+ * actor.attemptsTo(
+ *     Get.resource("some resource"),
+ *     PollingWait.until {
+ *     }
+ * ```
  * @param question answerable question from actor
  * @param matcher condition for validation
  * @param timeout maximum time to wait
@@ -25,48 +33,19 @@ class PollingWait<T>(
     private val timeout: Duration,
     private val pollInterval: Duration
 ) : SilentInteraction() {
-    class PollingWaitBuilder(
-        private var upto: Duration = 30.seconds,
-        private var polling: Duration = 1.seconds
-    ) {
-        fun <T> until(
-            question: Question<T>,
-            matcher: Matcher<T>
-        ): PollingWait<T> {
-            return PollingWait(question, matcher, upto, polling)
-        }
-
-        fun upTo(duration: Duration): PollingWaitBuilder {
-            this.upto = duration
-            return this
-        }
-
-        fun pollingEvery(duration: Duration): PollingWaitBuilder {
-            this.polling = duration
-            return this
-        }
-    }
-
     companion object {
-        fun upTo(duration: Duration): PollingWaitBuilder {
-            return PollingWaitBuilder(upto = duration)
-        }
-
-        fun pollingEvery(duration: Duration): PollingWaitBuilder {
-            return PollingWaitBuilder(polling = duration)
-        }
-
         fun <T> until(
             question: Question<T>,
-            matcher: Matcher<T>
+            matcher: Matcher<T>,
+            timeout: Duration = 30.seconds,
+            pollInterval: Duration = 500.milliseconds
         ): PollingWait<T> {
-            return PollingWaitBuilder().until(question, matcher)
+            return PollingWait(question, matcher, timeout, pollInterval)
         }
     }
-
     override fun <T : Actor> performAs(actor: T) {
         try {
-            Utils.waitUntil(timeout, pollInterval) {
+            Wait.until(timeout, pollInterval) {
                 try {
                     val answer = question.answeredBy(actor)
                     MatcherAssert.assertThat(answer, matcher)

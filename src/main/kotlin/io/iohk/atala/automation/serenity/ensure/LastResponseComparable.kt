@@ -1,7 +1,6 @@
 package io.iohk.atala.automation.serenity.ensure
 
 import net.serenitybdd.screenplay.Actor
-import net.serenitybdd.screenplay.Performable
 import net.serenitybdd.screenplay.ensure.BlackBox
 import net.serenitybdd.screenplay.ensure.CommonPreconditions
 import net.serenitybdd.screenplay.ensure.KnowableValue
@@ -23,7 +22,7 @@ class LastResponseComparable<A : Comparable<A>>(
             return resolvedValue == expected
         })
 
-    fun isEqualTo(expected: A): Performable {
-        return LastResponsePerformable(jsonPath, expected, isEqualComparator)
+    fun isEqualTo(expected: A): LastResponseInteraction<A> {
+        return LastResponseInteraction(jsonPath, expected, isEqualComparator)
     }
 }

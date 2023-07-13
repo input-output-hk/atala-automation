@@ -12,6 +12,8 @@ class LastResponseEnsure {
      *     Ensure.thatTheLastResponse().statusCode()./*validation*/()
      * )
      * ```
+     *
+     * @see LastResponseComparable
      */
     fun statusCode() = LastResponseComparable<Int>("statusCode")
 
@@ -22,6 +24,8 @@ class LastResponseEnsure {
      *     Ensure.thatTheLastResponse().contentType()./*validation*/()
      * )
      * ```
+     *
+     * @see LastResponseComparable
      */
     fun contentType() = LastResponseComparable<String>("contentType")
 }

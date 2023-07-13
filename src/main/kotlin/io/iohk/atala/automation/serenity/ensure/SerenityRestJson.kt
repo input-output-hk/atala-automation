@@ -16,7 +16,7 @@ class SerenityRestJson {
     init {
         val lastResponse = try {
             SerenityRest.lastResponse()
-        } catch (e: Exception) {
+        } catch (e: NullPointerException) {
             throw AssertionError("Couldn't find the last response, did you make a prior REST request?", e)
         }
 

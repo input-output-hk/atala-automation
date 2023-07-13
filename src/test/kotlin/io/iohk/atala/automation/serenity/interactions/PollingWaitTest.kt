@@ -43,13 +43,9 @@ class PollingWaitTest {
         val delta = measureTime {
             val actor = Actor.named("Test")
             actor.attemptsTo(
-                PollingWait
-                    .upTo(timeout)
-                    .pollingEvery(polling)
-                    .until(
-                        Question.about("value").answeredBy { "value" },
-                        equalTo("value")
-                    )
+                PollingWait.until(
+                    Question.about("value").answeredBy { "value" }, equalTo("value"), timeout, polling
+                )
             )
         }
         assertThat(delta, lessThan(timeout))
@@ -71,13 +67,9 @@ class PollingWaitTest {
         val delta = measureTime {
             val actor = Actor.named("Test")
             actor.attemptsTo(
-                PollingWait
-                    .upTo(timeout)
-                    .pollingEvery(polling)
-                    .until(
-                        Question.about("value").answeredBy { condition },
-                        equalTo(true)
-                    )
+                PollingWait.until(
+                    Question.about("value").answeredBy { condition }, equalTo(true), timeout, polling
+                )
             )
         }
 
@@ -95,24 +87,13 @@ class PollingWaitTest {
         val delta = measureTime {
             val exception = Assert.assertThrows(AssertionError::class.java) {
                 actor.attemptsTo(
-                    PollingWait
-                        .upTo(timeout)
-                        .pollingEvery(polling)
-                        .until(
-                            Question.about("value").answeredBy { "value" },
-                            equalTo("other")
-                        )
+                    PollingWait.until(
+                        Question.about("value").answeredBy { "value" }, equalTo("other"), timeout, polling
+                    )
                 )
             }
             assertThat(exception.message, containsString("Timeout [100ms] exceeded"))
         }
         assertThat(delta, greaterThan(timeout))
-    }
-
-    @Test
-    fun `PollingWait should provide static ways to create`() {
-        PollingWait.upTo(100.milliseconds).pollingEvery(100.milliseconds)
-        PollingWait.pollingEvery(100.milliseconds).upTo(100.milliseconds)
-        PollingWait.until(Question.about("value").answeredBy { "value" }, equalTo("something"))
     }
 }

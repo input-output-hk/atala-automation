@@ -1,4 +1,4 @@
-package io.iohk.atala.automation.serenity.extensions
+package io.iohk.atala.automation.extensions
 
 import io.iohk.atala.automation.WithMockServer
 import io.iohk.atala.automation.serenity.ensure.Ensure
