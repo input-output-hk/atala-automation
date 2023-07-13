@@ -1,7 +1,6 @@
-package io.iohk.atala.automation.serenity.configuration
+package io.iohk.atala.automation.serenity.objectfactory
 
 import io.cucumber.core.exception.CucumberException
-import io.iohk.atala.automation.serenity.di.AtalaObjectFactory
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert

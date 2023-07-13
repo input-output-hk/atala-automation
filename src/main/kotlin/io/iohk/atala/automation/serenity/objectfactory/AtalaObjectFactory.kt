@@ -1,4 +1,4 @@
-package io.iohk.atala.automation.serenity.di
+package io.iohk.atala.automation.serenity.objectfactory
 
 import io.cucumber.core.backend.ObjectFactory
 import io.cucumber.core.exception.CucumberException
@@ -13,7 +13,6 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.IllegalCallableAccessException
 import kotlin.reflect.full.cast
 import kotlin.reflect.full.primaryConstructor
-import kotlin.reflect.jvm.isAccessible
 
 /**
  * Object Factory class used for Dependency Injection (DI).
