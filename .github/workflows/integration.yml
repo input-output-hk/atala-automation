@@ -1,5 +1,9 @@
 name: Atala QA CI
 
+concurrency:
+  group: ${{ github.head_ref }}${{ github.ref }}-e2e-tests
+  cancel-in-progress: true
+
 on:
   pull_request:
     branches:
