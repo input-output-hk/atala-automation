@@ -1,0 +1,47 @@
+name: Atala QA Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  release-atala-automation:
+    name: "Release"
+    runs-on: ubuntu-latest
+    env:
+      ATALA_GITHUB_ACTOR: ${{ secrets.ATALA_GITHUB_ACTOR }}
+      ATALA_GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ATALA_GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+
+      - name: Gradle Build Action
+        uses: gradle/gradle-build-action@v2.6.0
+
+      - uses: crazy-max/ghaction-import-gpg@v5
+        id: import_gpg
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Release
+        env:
+          GIT_AUTHOR_EMAIL: ${{ steps.import_gpg.outputs.email }}
+          GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
+          GIT_AUTHOR_NAME: ${{ steps.import_gpg.outputs.name }}
+          GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
+        run: |
+          npm install
+          npx semantic-release
