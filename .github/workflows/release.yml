@@ -11,14 +11,15 @@ jobs:
     name: "Release"
     runs-on: ubuntu-latest
     env:
-      GITHUB_ACTOR: ${{ secrets.ATALA_GITHUB_ACTOR }}
-      GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
       ATALA_GITHUB_ACTOR: ${{ secrets.ATALA_GITHUB_ACTOR }}
       ATALA_GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ATALA_GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
