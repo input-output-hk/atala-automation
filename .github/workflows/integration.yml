@@ -26,3 +26,6 @@ jobs:
         with:
           files: |
             build/test-results/**/*.xml
+
+      - name: Publish Detekt Results
+        run: cat build/reports/detekt.md > test.xml

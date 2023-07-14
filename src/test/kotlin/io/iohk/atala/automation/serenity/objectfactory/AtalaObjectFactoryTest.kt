@@ -1,7 +1,9 @@
 package io.iohk.atala.automation.serenity.objectfactory
 
 import io.cucumber.core.exception.CucumberException
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Test

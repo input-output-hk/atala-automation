@@ -27,7 +27,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 
-
 class EnsureTest : WithMockServer() {
     @DefaultUrl("classpath:test.html")
     private class TestPage : PageObject()

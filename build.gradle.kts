@@ -1,5 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
-
 plugins {
     kotlin("jvm") version "1.8.21"
     `java-library`

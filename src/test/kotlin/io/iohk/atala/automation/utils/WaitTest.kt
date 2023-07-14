@@ -2,6 +2,7 @@ package io.iohk.atala.automation.utils
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.awaitility.core.ConditionTimeoutException
@@ -9,6 +10,7 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Assert
 import org.junit.Test
+import java.util.concurrent.Executors
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -36,7 +38,8 @@ class WaitTest {
         val timeout = 1.minutes
         var condition = false
 
-        CoroutineScope(Dispatchers.Default).launch {
+        val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        CoroutineScope(dispatcher).launch {
             delay(500)
             condition = true
         }

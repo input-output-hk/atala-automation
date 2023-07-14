@@ -30,19 +30,35 @@ import kotlin.time.Duration.Companion.seconds
 class PollingWait<T>(
     private val question: Question<T>,
     private val matcher: Matcher<T>,
-    private val timeout: Duration,
-    private val pollInterval: Duration
+    private val timeout: Duration = 30.seconds,
+    private val pollInterval: Duration = 500.milliseconds
 ) : SilentInteraction() {
-    companion object {
+
+    data class Builder(
+        private var timeout: Duration,
+        private var pollInterval: Duration
+    ) {
         fun <T> until(
             question: Question<T>,
-            matcher: Matcher<T>,
-            timeout: Duration = 30.seconds,
-            pollInterval: Duration = 500.milliseconds
+            matcher: Matcher<T>
         ): PollingWait<T> {
             return PollingWait(question, matcher, timeout, pollInterval)
         }
     }
+
+    companion object {
+        fun with(timeout: Duration, pollInterval: Duration): Builder {
+            return Builder(timeout, pollInterval)
+        }
+
+        fun <T> until(
+            question: Question<T>,
+            matcher: Matcher<T>
+        ): PollingWait<T> {
+            return PollingWait(question, matcher)
+        }
+    }
+
     override fun <T : Actor> performAs(actor: T) {
         try {
             Wait.until(timeout, pollInterval) {

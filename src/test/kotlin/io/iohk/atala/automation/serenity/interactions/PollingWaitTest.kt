@@ -1,7 +1,9 @@
 package io.iohk.atala.automation.serenity.interactions
 
+import kotlinx.coroutines.CloseableCoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.serenitybdd.core.Serenity
@@ -17,6 +19,7 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.Executors
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
@@ -43,14 +46,15 @@ class PollingWaitTest {
         val delta = measureTime {
             val actor = Actor.named("Test")
             actor.attemptsTo(
-                PollingWait.until(
-                    Question.about("value").answeredBy { "value" }, equalTo("value"), timeout, polling
-                )
+                PollingWait.with(timeout, polling)
+                    .until(
+                        Question.about("value").answeredBy { "value" },
+                        equalTo("value")
+                    )
             )
         }
         assertThat(delta, lessThan(timeout))
     }
-
 
     @Test
     @ExperimentalTime
@@ -59,7 +63,8 @@ class PollingWaitTest {
         val polling = 100.milliseconds
         var condition = false
 
-        CoroutineScope(Dispatchers.Default).launch {
+        val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        CoroutineScope(dispatcher).launch {
             delay(500)
             condition = true
         }
@@ -67,8 +72,9 @@ class PollingWaitTest {
         val delta = measureTime {
             val actor = Actor.named("Test")
             actor.attemptsTo(
-                PollingWait.until(
-                    Question.about("value").answeredBy { condition }, equalTo(true), timeout, polling
+                PollingWait.with(timeout, polling).until(
+                    Question.about("value").answeredBy { condition },
+                    equalTo(true)
                 )
             )
         }
@@ -87,9 +93,11 @@ class PollingWaitTest {
         val delta = measureTime {
             val exception = Assert.assertThrows(AssertionError::class.java) {
                 actor.attemptsTo(
-                    PollingWait.until(
-                        Question.about("value").answeredBy { "value" }, equalTo("other"), timeout, polling
-                    )
+                    PollingWait.with(timeout, polling)
+                        .until(
+                            Question.about("value").answeredBy { "value" },
+                            equalTo("other")
+                        )
                 )
             }
             assertThat(exception.message, containsString("Timeout [100ms] exceeded"))

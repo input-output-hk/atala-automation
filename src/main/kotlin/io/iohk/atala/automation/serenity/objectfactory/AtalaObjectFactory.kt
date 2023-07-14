@@ -63,7 +63,6 @@ class AtalaObjectFactory : ObjectFactory {
                 throw CucumberException("${type.qualifiedName} has no constructor", e)
             } catch (e: IllegalArgumentException) {
                 throw CucumberException("${type.qualifiedName} should have an empty constructor", e)
-
             }
         }
 

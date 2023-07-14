@@ -18,10 +18,10 @@ import net.thucydides.core.annotations.Step
 class LastResponseInteraction<A : Comparable<A>>(
     private val jsonPath: String,
     private val expected: A,
-    private val expectation: Expectation<((Actor) -> Comparable<A>?)?, A>,
+    private val expectation: Expectation<((Actor) -> Comparable<A>?)?, A>
 ) : Interaction {
-    private val expectedDescription = "SerenityRest.lastResponse().${jsonPath}"
-    val description = expectation.describe(expected, false, expectedDescription);
+    private val expectedDescription = "SerenityRest.lastResponse().$jsonPath"
+    val description = expectation.describe(expected, false, expectedDescription)
 
     @Step("{0} should see that #description")
     override fun <T : Actor?> performAs(actor: T) {
