@@ -21,8 +21,8 @@ jobs:
       - name: Gradle Build Action
         uses: gradle/gradle-build-action@v2
 
-      - name: Test
-        run: ./gradlew test
+      - name: Build and test
+        run: ./gradlew build
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
