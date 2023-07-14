@@ -28,4 +28,4 @@ jobs:
             build/test-results/**/*.xml
 
       - name: Publish Detekt Results
-        run: cat build/reports/detekt.md > test.xml
+        run: cat build/reports/detekt/detekt.md >> $GITHUB_STEP_SUMMARY
