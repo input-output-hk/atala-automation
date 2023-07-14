@@ -44,7 +44,8 @@
           "assets": [
             "CHANGELOG.md",
             "package.json",
-            "package-lock.json"
+            "package-lock.json",
+            "gradle.properties"
           ],
           "message": "chore(release): release atala-automation v${nextRelease.version}\n\n${nextRelease.notes}"
         }
