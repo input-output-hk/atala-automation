@@ -33,12 +33,6 @@
         }
       ],
       [
-        "@semantic-release/exec",
-        {
-          "prepareCmd": "./gradlew publishMavenPublicationToGitHubPackagesRepository"
-        }
-      ],
-      [
         "@semantic-release/changelog",
         {
           "changelogFile": "CHANGELOG.md"
