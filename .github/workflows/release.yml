@@ -9,6 +9,11 @@ jobs:
   release-atala-automation:
     name: "Release"
     runs-on: ubuntu-latest
+    env:
+      GITHUB_ACTOR: ${{ secrets.ATALA_GITHUB_ACTOR }}
+      GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
+      ATALA_GITHUB_ACTOR: ${{ secrets.ATALA_GITHUB_ACTOR }}
+      ATALA_GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
 
     steps:
       - name: Checkout
@@ -22,12 +27,12 @@ jobs:
       - name: Gradle Build Action
         uses: gradle/gradle-build-action@v2
 
-      - uses: crazy-max/ghaction-import-gpg@v3
+      - uses: crazy-max/ghaction-import-gpg@v5
         id: import_gpg
         with:
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          git-user-signingkey: true
-          git-commit-gpgsign: true
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
 
       - name: Release
         env:
@@ -35,8 +40,6 @@ jobs:
           GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GIT_AUTHOR_NAME: ${{ steps.import_gpg.outputs.name }}
           GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
-          ATALA_GITHUB_ACTOR: ${{ secrets.ATALA_GITHUB_ACTOR }}
-          ATALA_GITHUB_TOKEN: ${{ secrets.ATALA_GITHUB_TOKEN }}
         run: |
           npm install
           npx semantic-release
