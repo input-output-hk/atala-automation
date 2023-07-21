@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.1.0...atala-automation-v0.1.1) (2023-07-21)
+
+
+### Bug Fixes
+
+* cucumber object factory ([6db113b](https://github.com/input-output-hk/atala-automation/commit/6db113b09363d2da214c8f6cd3c9913092081290))
+
 # [0.1.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.0.1...atala-automation-v0.1.0) (2023-07-14)
 
 
