@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.1.1...atala-automation-v0.1.2) (2023-08-15)
+
+
+### Bug Fixes
+
+* awaitility thread ([#9](https://github.com/input-output-hk/atala-automation/issues/9)) ([fb36497](https://github.com/input-output-hk/atala-automation/commit/fb36497de253473e7b52ea2e3a771bcc25c06fc1))
+
 ## [0.1.1](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.1.0...atala-automation-v0.1.1) (2023-07-21)
 
 
