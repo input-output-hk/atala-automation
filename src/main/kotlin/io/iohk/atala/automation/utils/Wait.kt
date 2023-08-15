@@ -27,6 +27,7 @@ object Wait {
         condition: () -> Boolean
     ) {
         Awaitility.await()
+            .pollInSameThread()
             .with()
             .pollInterval(pollInterval.toJavaDuration())
             .atMost(timeout.toJavaDuration())
