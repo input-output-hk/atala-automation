@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.1.2...atala-automation-v0.2.0) (2023-09-02)
+
+
+### Features
+
+* bump serenity to v4.0.0 ([#10](https://github.com/input-output-hk/atala-automation/issues/10)) ([c7f431d](https://github.com/input-output-hk/atala-automation/commit/c7f431d9bafd2c3c4dae2c4f04afa62c8d574bd8))
+
 ## [0.1.2](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.1.1...atala-automation-v0.1.2) (2023-08-15)
 
 
