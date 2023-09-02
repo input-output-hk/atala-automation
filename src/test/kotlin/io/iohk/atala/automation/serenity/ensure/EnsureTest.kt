@@ -1,6 +1,8 @@
 package io.iohk.atala.automation.serenity.ensure
 
 import io.iohk.atala.automation.WithMockServer
+import net.serenitybdd.annotations.DefaultUrl
+import net.serenitybdd.annotations.Managed
 import net.serenitybdd.core.Serenity
 import net.serenitybdd.core.pages.PageObject
 import net.serenitybdd.rest.SerenityRest
@@ -11,8 +13,6 @@ import net.serenitybdd.screenplay.actions.Open
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi
 import net.serenitybdd.screenplay.rest.interactions.Get
 import net.serenitybdd.screenplay.targets.ByTarget
-import net.thucydides.core.annotations.DefaultUrl
-import net.thucydides.core.annotations.Managed
 import net.thucydides.core.steps.StepEventBus
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
