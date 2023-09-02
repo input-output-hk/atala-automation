@@ -12,13 +12,14 @@ repositories {
 }
 
 dependencies {
+    api("javax.inject:javax.inject:1")
     api("junit:junit:4.13.2")
 
-    api("net.serenity-bdd:serenity-core:3.8.1")
-    api("net.serenity-bdd:serenity-ensure:3.8.1")
-    api("net.serenity-bdd:serenity-cucumber:3.8.1")
-    api("net.serenity-bdd:serenity-screenplay:3.8.1")
-    api("net.serenity-bdd:serenity-screenplay-rest:3.8.1")
+    api("net.serenity-bdd:serenity-core:4.0.0")
+    api("net.serenity-bdd:serenity-ensure:4.0.0")
+    api("net.serenity-bdd:serenity-cucumber:4.0.0")
+    api("net.serenity-bdd:serenity-screenplay:4.0.0")
+    api("net.serenity-bdd:serenity-screenplay-rest:4.0.0")
 
     api("ch.qos.logback:logback-classic:1.4.8")
     api("org.slf4j:slf4j-api:2.0.7")

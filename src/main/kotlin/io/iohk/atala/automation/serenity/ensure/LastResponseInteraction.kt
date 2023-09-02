@@ -2,11 +2,11 @@ package io.iohk.atala.automation.serenity.ensure
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jayway.jsonpath.JsonPath
+import net.serenitybdd.annotations.Step
 import net.serenitybdd.screenplay.Actor
 import net.serenitybdd.screenplay.Interaction
 import net.serenitybdd.screenplay.ensure.Expectation
 import net.serenitybdd.screenplay.ensure.KnownValue
-import net.thucydides.core.annotations.Step
 
 /**
  * Performs validation for [LastResponseComparable]
