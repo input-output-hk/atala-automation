@@ -1,5 +1,6 @@
 package io.iohk.atala.automation.serenity.objectfactory
 
+import com.google.gson.annotations.SerializedName
 import io.cucumber.core.exception.CucumberException
 import io.iohk.atala.automation.WithMockServer
 import io.iohk.atala.automation.extensions.ResponseTest
@@ -16,6 +17,7 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Test
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
 class AtalaObjectFactoryTest: WithMockServer() {
@@ -30,6 +32,11 @@ class AtalaObjectFactoryTest: WithMockServer() {
         @Inject
         lateinit var injectable: Injectable
     }
+
+    data class Date (
+        @SerializedName("date")
+        val date: OffsetDateTime
+    )
 
     @Test
     fun `AtalaObjectFactory should create new object instance if not present`() {
@@ -79,7 +86,7 @@ class AtalaObjectFactoryTest: WithMockServer() {
         AtalaObjectFactory
         val actor = Actor.named("tester").whoCan(CallAnApi.at("http://localhost"))
         actor.attemptsTo(Get.resource("/offsetdatetime"))
-        val date = SerenityRest.lastResponse().get<ResponseTest.Date>()
+        val date = SerenityRest.lastResponse().get<Date>()
         assertThat(date, notNullValue())
         assertThat(date.date.toString(), equalTo("2023-09-14T11:24:46.868625Z"))
     }

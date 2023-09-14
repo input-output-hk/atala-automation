@@ -30,7 +30,8 @@ class AtalaObjectFactory : ObjectFactory {
         private val instances: MutableMap<KClass<*>, Any> = Collections.synchronizedMap(HashMap())
 
         init {
-            val objectMapperConfig = ObjectMapperConfig(ObjectMapperType.GSON).gsonObjectMapperFactory(CustomGsonObjectMapperFactory())
+            val objectMapperConfig = ObjectMapperConfig(ObjectMapperType.GSON)
+                .gsonObjectMapperFactory(CustomGsonObjectMapperFactory())
             val config = RestAssuredConfig.newConfig().objectMapperConfig(objectMapperConfig)
             SerenityRest.setDefaultConfig(config)
         }
