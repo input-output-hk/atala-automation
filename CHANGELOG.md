@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.2.0...atala-automation-v0.3.0) (2023-09-14)
+
+
+### Features
+
+* add gson custom factory ([#11](https://github.com/input-output-hk/atala-automation/issues/11)) ([03c791b](https://github.com/input-output-hk/atala-automation/commit/03c791bbd3dff9b8d828184844c46f8e90e67532))
+
 # [0.2.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.1.2...atala-automation-v0.2.0) (2023-09-02)
 
 
