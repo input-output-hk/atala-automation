@@ -47,6 +47,13 @@ open class WithMockServer {
                     .withBody("""{ "list": [1, 2, 3] }""")
             )
         )
+
+        WireMock.stubFor(
+            WireMock.get(WireMock.urlEqualTo("/offsetdatetime")).willReturn(
+                WireMock.aResponse().withStatus(200).withHeader("Content-Type", "application/json")
+                    .withBody("""{ "date": "2023-09-14T11:24:46.868625Z" }""")
+            )
+        )
     }
 
     @After
