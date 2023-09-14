@@ -3,9 +3,14 @@ package io.iohk.atala.automation.serenity.objectfactory
 import io.cucumber.core.backend.ObjectFactory
 import io.cucumber.core.exception.CucumberException
 import io.cucumber.core.plugin.ConfigureDriverFromTags
+import io.iohk.atala.automation.restassured.CustomGsonObjectMapperFactory
+import io.restassured.config.ObjectMapperConfig
+import io.restassured.config.RestAssuredConfig
+import io.restassured.mapper.ObjectMapperType
 import net.serenitybdd.core.Serenity
 import net.serenitybdd.core.annotations.events.BeforeScenario
 import net.serenitybdd.core.lifecycle.LifecycleRegister
+import net.serenitybdd.rest.SerenityRest
 import net.thucydides.core.steps.StepEventBus
 import java.util.*
 import javax.inject.Inject
@@ -23,6 +28,12 @@ class AtalaObjectFactory : ObjectFactory {
     companion object {
         private val classes = Collections.synchronizedSet(HashSet<Class<*>>())
         private val instances: MutableMap<KClass<*>, Any> = Collections.synchronizedMap(HashMap())
+
+        init {
+            val objectMapperConfig = ObjectMapperConfig(ObjectMapperType.GSON).gsonObjectMapperFactory(CustomGsonObjectMapperFactory())
+            val config = RestAssuredConfig.newConfig().objectMapperConfig(objectMapperConfig)
+            SerenityRest.setDefaultConfig(config)
+        }
 
         fun <T : Any> getInstance(type: KClass<T>): T {
             ConfigureDriverFromTags.inTheCurrentTestOutcome()
