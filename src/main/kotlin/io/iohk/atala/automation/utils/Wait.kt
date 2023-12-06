@@ -26,8 +26,8 @@ object Wait {
     fun until(
         timeout: Duration = 5.seconds,
         pollInterval: Duration = 500.milliseconds,
+        errorMessage: String? = null,
         condition: () -> Boolean,
-        errorMessage: String?,
     ) {
         try {
             Awaitility.await()
