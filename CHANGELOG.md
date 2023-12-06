@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.3.0...atala-automation-v0.3.1) (2023-12-06)
+
+
+### Bug Fixes
+
+* add error message parameter to Wait.until function ([#12](https://github.com/input-output-hk/atala-automation/issues/12)) ([066b3df](https://github.com/input-output-hk/atala-automation/commit/066b3dfc1f891cad09b1889d845f1e4a9995f167))
+
 # [0.3.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.2.0...atala-automation-v0.3.0) (2023-09-14)
 
 
