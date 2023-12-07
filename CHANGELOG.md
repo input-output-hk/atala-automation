@@ -1,3 +1,10 @@
+## [0.3.2](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.3.1...atala-automation-v0.3.2) (2023-12-07)
+
+
+### Bug Fixes
+
+* add maven central publishing ([#13](https://github.com/input-output-hk/atala-automation/issues/13)) ([ff4de95](https://github.com/input-output-hk/atala-automation/commit/ff4de9539880a3fed4bb2f7b670ebf81c00add2b))
+
 ## [0.3.1](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.3.0...atala-automation-v0.3.1) (2023-12-06)
 
 
