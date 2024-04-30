@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.3.2...atala-automation-v0.4.0) (2024-04-30)
+
+
+### Features
+
+* add OffsetDateTime serializer ([#14](https://github.com/input-output-hk/atala-automation/issues/14)) ([d2f3503](https://github.com/input-output-hk/atala-automation/commit/d2f3503db45d13fcd30f87bd6c37c3aae1858a54))
+
 ## [0.3.2](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.3.1...atala-automation-v0.3.2) (2023-12-07)
 
 
