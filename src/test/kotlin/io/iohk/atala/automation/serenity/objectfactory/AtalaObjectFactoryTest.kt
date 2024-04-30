@@ -1,26 +1,25 @@
 package io.iohk.atala.automation.serenity.objectfactory
 
+import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import io.cucumber.core.exception.CucumberException
 import io.iohk.atala.automation.WithMockServer
-import io.iohk.atala.automation.extensions.ResponseTest
 import io.iohk.atala.automation.extensions.get
+import io.iohk.atala.automation.restassured.CustomGsonObjectMapperFactory
 import net.serenitybdd.rest.SerenityRest
 import net.serenitybdd.screenplay.Actor
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi
 import net.serenitybdd.screenplay.rest.interactions.Get
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Test
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
-class AtalaObjectFactoryTest: WithMockServer() {
+class AtalaObjectFactoryTest : WithMockServer() {
     object ObjectTestClass
     private class PrivateTestClass
     class ParameterizedTestClass(val parameter: String)
@@ -28,12 +27,13 @@ class AtalaObjectFactoryTest: WithMockServer() {
     class Injectable {
         val test = "Test"
     }
+
     class Injected {
         @Inject
         lateinit var injectable: Injectable
     }
 
-    data class Date (
+    data class Date(
         @SerializedName("date")
         val date: OffsetDateTime
     )
@@ -89,5 +89,22 @@ class AtalaObjectFactoryTest: WithMockServer() {
         val date = SerenityRest.lastResponse().get<Date>()
         assertThat(date, notNullValue())
         assertThat(date.date.toString(), equalTo("2023-09-14T11:24:46.868625Z"))
+    }
+
+    @Test
+    fun `Should be able to serialize and deserialize OffsetDateTime`() {
+        data class DateModelTest(
+            @SerializedName("dateTime")
+            var dateTime: OffsetDateTime,
+        )
+
+        val adapter = CustomGsonObjectMapperFactory.OffsetDateTimeTypeAdapter()
+        val gson = GsonBuilder().registerTypeAdapter(OffsetDateTime::class.java, adapter).create()
+        val body = DateModelTest(OffsetDateTime.now())
+        val json = gson.toJson(body)
+        assertThat(json, containsString(body.dateTime.toString()))
+
+        val deserialized = gson.fromJson(json, DateModelTest::class.java)
+        assertThat(deserialized.dateTime, equalTo(body.dateTime))
     }
 }
