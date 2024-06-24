@@ -29,7 +29,7 @@ class PostTest : WithMockServer() {
 
     @Test
     fun `Post Rest Interaction should be enhanced with body property`() {
-        val actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
+        val actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
 
         actor.attemptsTo(
             Post.to("/").body(BodyTest()),

@@ -31,7 +31,7 @@ class ResponseTest : WithMockServer() {
 
     @Test
     fun `Get last response typed object`() {
-        val actor = Actor.named("tester").whoCan(CallAnApi.at("http://localhost"))
+        val actor = Actor.named("tester").whoCan(CallAnApi.at(baseUrl))
         actor.attemptsTo(Get.resource("/field"))
         val typedResponse = SerenityRest.lastResponse().get<TestClass>()
         MatcherAssert.assertThat(typedResponse, CoreMatchers.notNullValue())
@@ -40,7 +40,7 @@ class ResponseTest : WithMockServer() {
 
     @Test
     fun `Get last response typed subfield object`() {
-        val actor = Actor.named("tester").whoCan(CallAnApi.at("http://localhost"))
+        val actor = Actor.named("tester").whoCan(CallAnApi.at(baseUrl))
         actor.attemptsTo(Get.resource("/subfield"))
         val typedResponse = SerenityRest.lastResponse().get<TestClass>("subfield")
         MatcherAssert.assertThat(typedResponse, CoreMatchers.notNullValue())
@@ -49,8 +49,8 @@ class ResponseTest : WithMockServer() {
 
     @Test
     fun `Get last response typed list`() {
-        val actor = Actor.named("tester").whoCan(CallAnApi.at("http://localhost"))
-        actor.attemptsTo(Get.resource("/list"))
+        val actor = Actor.named("tester").whoCan(CallAnApi.at(baseUrl))
+        actor.attemptsTo(Get.resource("/simplelist"))
         val typedList = SerenityRest.lastResponse().getList<Int>("list")
         MatcherAssert.assertThat(typedList, CoreMatchers.notNullValue())
         MatcherAssert.assertThat(typedList.size, CoreMatchers.equalTo(3))

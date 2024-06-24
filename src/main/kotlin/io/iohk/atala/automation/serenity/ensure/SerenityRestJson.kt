@@ -1,5 +1,9 @@
 package io.iohk.atala.automation.serenity.ensure
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import io.iohk.atala.automation.restassured.CustomGsonObjectMapperFactory
 import net.serenitybdd.rest.SerenityRest
 
 /**
@@ -9,9 +13,9 @@ import net.serenitybdd.rest.SerenityRest
  * and get the attributes through xpath.
  */
 class SerenityRestJson {
-    val statusCode: Int
+    val statusCode: String
     val contentType: String
-    val body: String
+    val body: Any
 
     init {
         val lastResponse = try {
@@ -20,8 +24,39 @@ class SerenityRestJson {
             throw AssertionError("Couldn't find the last response, did you make a prior REST request?", e)
         }
 
-        this.statusCode = lastResponse.statusCode
+        this.statusCode = lastResponse.statusCode.toString()
         this.contentType = lastResponse.contentType
-        this.body = lastResponse.body.asString()
+
+        val gson = CustomGsonObjectMapperFactory.builder().create()
+
+        val jsonBody = lastResponse.body.asString()
+        var bodyJsonObject: JsonObject? = null
+        var bodyJsonArray: JsonArray? = null
+        suppress {
+            bodyJsonObject = gson.fromJson(jsonBody, JsonObject::class.java)
+        }
+        suppress {
+            bodyJsonArray = gson.fromJson(jsonBody, JsonArray::class.java)
+        }
+
+        if (bodyJsonObject != null) {
+            this.body = bodyJsonObject!!
+        } else if (bodyJsonArray != null) {
+            this.body = bodyJsonArray!!
+        } else {
+            throw IllegalStateException("Response type is not JsonObject nor JsonArray")
+        }
+    }
+
+    override fun toString(): String {
+        val gson = CustomGsonObjectMapperFactory.builder().create()
+        return gson.toJson(this)
+    }
+
+    private fun suppress(function: () -> Unit) {
+        try {
+            function.invoke()
+        } catch (_: Exception) {
+        }
     }
 }

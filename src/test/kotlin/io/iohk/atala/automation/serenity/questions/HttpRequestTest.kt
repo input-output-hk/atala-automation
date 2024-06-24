@@ -25,7 +25,7 @@ class HttpRequestTest : WithMockServer() {
 
     @Test
     fun `Question about HttpRequest call`() {
-        val actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
+        val actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
         HttpRequest.get("/").answeredBy(actor)
     }
 

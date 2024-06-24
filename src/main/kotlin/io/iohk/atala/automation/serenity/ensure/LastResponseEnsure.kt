@@ -1,5 +1,7 @@
 package io.iohk.atala.automation.serenity.ensure
 
+import kotlin.reflect.KClass
+
 /**
  * Exposes the methods for [Ensure.thatTheLastResponse].
  */
@@ -15,7 +17,7 @@ class LastResponseEnsure {
      *
      * @see LastResponseComparable
      */
-    fun statusCode() = LastResponseComparable<Int>("statusCode")
+    fun statusCode() = LastResponseComparable("$.statusCode")
 
     /**
      * Usage example:
@@ -27,5 +29,17 @@ class LastResponseEnsure {
      *
      * @see LastResponseComparable
      */
-    fun contentType() = LastResponseComparable<String>("contentType")
+    fun contentType() = LastResponseComparable("$.contentType")
+
+    /**
+     * Usage example:
+     * ```
+     * actor.attemptsTo(
+     *     Ensure.thatTheLastResponse().body("path.to.variable")./*validation*/()
+     * )
+     * ```
+     *
+     * @see LastResponseComparable
+     */
+    fun body(path: String = "") = LastResponseComparable("$.body", path)
 }

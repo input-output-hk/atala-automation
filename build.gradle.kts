@@ -6,6 +6,7 @@ plugins {
     `maven-publish`
     id("io.gitlab.arturbosch.detekt") version "1.23.0"
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0-rc-1"
+    id("org.jetbrains.dokka") version "1.9.20"
     signing
 }
 
@@ -16,26 +17,28 @@ repositories {
 }
 
 dependencies {
+    val serenityVersion = "4.1.20"
+
     api("javax.inject:javax.inject:1")
     api("junit:junit:4.13.2")
 
-    api("net.serenity-bdd:serenity-core:4.0.0")
-    api("net.serenity-bdd:serenity-ensure:4.0.0")
-    api("net.serenity-bdd:serenity-cucumber:4.0.0")
-    api("net.serenity-bdd:serenity-screenplay:4.0.0")
-    api("net.serenity-bdd:serenity-screenplay-rest:4.0.0")
+    api("net.serenity-bdd:serenity-core:$serenityVersion")
+    api("net.serenity-bdd:serenity-ensure:$serenityVersion")
+    api("net.serenity-bdd:serenity-cucumber:$serenityVersion")
+    api("net.serenity-bdd:serenity-screenplay:$serenityVersion")
+    api("net.serenity-bdd:serenity-screenplay-rest:$serenityVersion")
 
-    api("ch.qos.logback:logback-classic:1.4.8")
+    api("ch.qos.logback:logback-classic:1.5.6")
     api("org.slf4j:slf4j-api:2.0.7")
 
     api("io.ktor:ktor-client-core-jvm:2.3.1")
-    api("com.jayway.jsonpath:json-path:2.8.0")
+    api("com.jayway.jsonpath:json-path:2.9.0")
     api("org.awaitility:awaitility:4.2.0")
 
     api("org.jetbrains.kotlin:kotlin-reflect:1.8.22")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
-    testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
+    testImplementation("org.wiremock:wiremock-standalone:3.7.0")
 }
 
 kotlin {
@@ -108,6 +111,12 @@ nexusPublishing {
 signing {
     val base64EncodedAsciiArmoredSigningKey: String = System.getenv("BASE64_ARMORED_GPG_SIGNING_KEY_MAVEN") ?: ""
     val signingKeyPassword: String = System.getenv("SIGNING_KEY_PASSWORD") ?: ""
-    useInMemoryPgpKeys(String(Base64.getDecoder().decode(base64EncodedAsciiArmoredSigningKey.toByteArray())), signingKeyPassword)
-    sign(publishing.publications)
+    if (base64EncodedAsciiArmoredSigningKey.isNotEmpty() && signingKeyPassword.isNotEmpty()) {
+        useInMemoryPgpKeys(String(Base64.getDecoder().decode(base64EncodedAsciiArmoredSigningKey.toByteArray())), signingKeyPassword)
+        sign(publishing.publications)
+    }
+}
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(projectDir.resolve("docs"))
 }

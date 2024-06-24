@@ -12,7 +12,7 @@ import net.serenitybdd.core.annotations.events.BeforeScenario
 import net.serenitybdd.core.lifecycle.LifecycleRegister
 import net.serenitybdd.rest.SerenityRest
 import net.thucydides.core.steps.StepEventBus
-import java.util.*
+import java.util.Collections
 import javax.inject.Inject
 import kotlin.reflect.KClass
 import kotlin.reflect.full.IllegalCallableAccessException
@@ -56,7 +56,8 @@ class AtalaObjectFactory : ObjectFactory {
 
         private fun <T : Any> newInstance(type: KClass<T>): T {
             val instance = invokeConstructor(type)
-            Serenity.initializeWithNoStepListener(instance).throwExceptionsImmediately()
+            Serenity.initializeWithNoStepListener(instance)
+            Serenity.throwExceptionsImmediately()
             if (StepEventBus.getParallelEventBus().isBaseStepListenerRegistered) {
                 val newTestOutcome = StepEventBus.getParallelEventBus().baseStepListener.currentTestOutcome
                 LifecycleRegister.register(instance)

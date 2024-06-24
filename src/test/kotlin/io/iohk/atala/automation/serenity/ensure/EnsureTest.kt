@@ -25,11 +25,28 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.OffsetDateTime
 import java.util.*
 
 class EnsureTest : WithMockServer() {
     @DefaultUrl("classpath:test.html")
     private class TestPage : PageObject()
+
+    class Field(val field: String) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other !is Field) return false
+            return (field == other.field)
+        }
+
+        override fun toString(): String {
+            return """${this::class.simpleName}(field="$field")"""
+        }
+
+        override fun hashCode(): Int {
+            return field.hashCode()
+        }
+    }
 
     @Managed(driver = "chrome", options = "--headless")
     var driver: WebDriver? = null
@@ -43,6 +60,7 @@ class EnsureTest : WithMockServer() {
     @After
     fun cleanup() {
         Serenity.done()
+        Serenity.recordReportData()
     }
 
     @Test
@@ -111,11 +129,87 @@ class EnsureTest : WithMockServer() {
 
     @Test
     fun `Ensure should be able to check SerenityRest lastResponse()`() {
-        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
         actor.attemptsTo(
             Get.resource("/field"),
             Ensure.thatTheLastResponse().statusCode().isEqualTo(200),
-            Ensure.thatTheLastResponse().contentType().isEqualTo("application/json")
+            Ensure.thatTheLastResponse().contentType().isEqualTo("application/json"),
+            Ensure.thatTheLastResponse().body("field").isEqualTo("response")
+        )
+    }
+
+    @Test
+    fun `Ensure should be able to check SerenityRest lastResponse() status code`() {
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
+        actor.attemptsTo(
+            Get.resource("/field"),
+            Ensure.thatTheLastResponse().statusCode().isEqualTo(200)
+        )
+    }
+
+    @Test
+    fun `Ensure should be able to check SerenityRest lastResponse() typed body`() {
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
+        actor.attemptsTo(
+            Get.resource("/field"),
+            Ensure.thatTheLastResponse().body().isEqualTo(
+                Field("response")
+            )
+        )
+    }
+
+    @Test
+    fun `Ensure should be able to check SerenityRest lastResponse() array response body`() {
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
+        actor.attemptsTo(
+            Get.resource("/list"),
+            Ensure.thatTheLastResponse().body("[0]").isEqualTo("field"),
+            Ensure.thatTheLastResponse().body("[1]").isEqualTo("response"),
+            Ensure.thatTheLastResponse().body("[2].date").isEqualTo("2023-09-14T11:24:46.868625Z"),
+            Ensure.thatTheLastResponse().body("[2].date").isEqualTo(OffsetDateTime.parse("2023-09-14T11:24:46.868625Z")),
+        )
+    }
+
+    @Test
+    fun `Ensure should be able to check SerenityRest lastResponse() array of object response body`() {
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
+        actor.attemptsTo(
+            Get.resource("/objects"),
+            Ensure.thatTheLastResponse().body("[0].field").isEqualTo("response"),
+            Ensure.thatTheLastResponse().body("[1]").isEqualTo(Field("value")),
+        )
+    }
+
+    @Test
+    fun `Ensure should be able to check SerenityRest lastResponse() stringified object body`() {
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
+        actor.attemptsTo(
+            Get.resource("/objects"),
+            Ensure.thatTheLastResponse().body("[0]").isEqualTo("""{"field":"response"}"""),
+        )
+    }
+
+    @Test
+    fun `Ensure should throw the expected error`() {
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
+        val ex = assertThrows(AssertionError::class.java) {
+            actor.attemptsTo(
+                Get.resource("/field"),
+                Ensure.thatTheLastResponse().statusCode().isEqualTo(200),
+                Ensure.thatTheLastResponse().contentType().isEqualTo("application/json"),
+                Ensure.thatTheLastResponse().body("field").isEqualTo("test")
+            )
+        }
+        assertThat(ex.message, containsString("SerenityRest.lastResponse().\$.body.field that is equal to: <\"test\">"))
+    }
+
+    @Test
+    fun `Ensure should be able to check SerenityRest lastResponse() nested body path`() {
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
+        actor.attemptsTo(
+            Get.resource("/nested"),
+            Ensure.thatTheLastResponse().statusCode().isEqualTo(200),
+            Ensure.thatTheLastResponse().body("nested.field.value").isEqualTo("value")
         )
     }
 
@@ -124,7 +218,7 @@ class EnsureTest : WithMockServer() {
         // clears any previous request
         SerenityRest.clear()
 
-        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at("http://localhost"))
+        val actor: Actor = Actor.named("Test").whoCan(CallAnApi.at(baseUrl))
         val exception = assertThrows(AssertionError::class.java) {
             actor.attemptsTo(
                 Ensure.thatTheLastResponse().contentType().isEqualTo("application/json")
@@ -136,7 +230,19 @@ class EnsureTest : WithMockServer() {
     @Test
     fun `LastResponseInteraction should have a description`() {
         val interaction = Ensure.thatTheLastResponse().statusCode().isEqualTo(1)
-        assertThat(interaction.description, equalTo("SerenityRest.lastResponse().statusCode that is equal to: <1>"))
+        assertThat(
+            interaction.description,
+            equalTo("SerenityRest.lastResponse().$.statusCode that is equal to: <1>")
+        )
+    }
+
+    @Test
+    fun `LastResponseInteraction should have a description with body path`() {
+        val interaction = Ensure.thatTheLastResponse().body("my.path").isEqualTo(1)
+        assertThat(
+            interaction.description,
+            equalTo("SerenityRest.lastResponse().$.body.my.path that is equal to: <1>")
+        )
     }
 
     @Test
@@ -152,7 +258,7 @@ class EnsureTest : WithMockServer() {
             val exception = assertThrows(AssertionError::class.java) {
                 Ensure.reportSoftAssertions()
             }
-            assertThat(exception.message, containsString("SOFT ASSERTION FAILURES"))
+            assertThat(exception.message, containsString("ASSERTION ERRORS"))
         }
     }
 }
