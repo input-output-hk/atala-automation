@@ -9,13 +9,14 @@ import net.thucydides.model.steps.StepFailure
 import net.thucydides.model.steps.StepListener
 import java.time.ZonedDateTime
 
-class SerenityStepListener: StepListener {
+class SerenityStepListener : StepListener {
     data class Entry(
         val keyword: String,
         val stepText: String,
         val arguments: List<String>,
         val isSubStep: Boolean
     )
+
     companion object {
         val stepList = mutableListOf<Entry>()
     }
@@ -42,7 +43,13 @@ class SerenityStepListener: StepListener {
     override fun skippedStepStarted(description: ExecutedStepDescription) {}
     override fun stepFailed(failure: StepFailure) {}
     override fun stepFailed(failure: StepFailure?, screenshotList: MutableList<ScreenshotAndHtmlSource>?, isInDataDrivenTest: Boolean) {}
-    override fun stepFailed(failure: StepFailure?, screenshotList: MutableList<ScreenshotAndHtmlSource>?, isInDataDrivenTest: Boolean, zonedDateTime: ZonedDateTime?) {}
+    override fun stepFailed(
+        failure: StepFailure?,
+        screenshotList: MutableList<ScreenshotAndHtmlSource>?,
+        isInDataDrivenTest: Boolean,
+        zonedDateTime: ZonedDateTime?
+    ) {
+    }
 
     override fun lastStepFailed(failure: StepFailure) {}
     override fun stepIgnored() {}

@@ -58,13 +58,19 @@ class Steps {
     }
 
     @When("some datatable")
-    fun someDataTable(dataTable: DataTable) {}
+    fun someDataTable(dataTable: DataTable) {
+        println(dataTable)
+    }
 
     @When("some {}, {}, {} parameters")
-    fun someParameters(i1: Int, i2: Int, i3: Int) {}
+    fun someParameters(i1: Int, i2: Int, i3: Int) {
+        println("$i1, $i2, $i3")
+    }
 
     @When("some {} example")
-    fun someExample(example: String) {}
+    fun someExample(example: String) {
+        println(example)
+    }
 
     @Then("should pass")
     fun shouldPass() {}

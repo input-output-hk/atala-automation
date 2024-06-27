@@ -37,10 +37,7 @@ import kotlin.math.max
 /**
  * Adapted from PrettyFormatter to add messages from SerenityListener.
  *
- * @see
- * <a href="https://github.com/cucumber/cucumber-jvm/blob/release/v7.17.0/cucumber-core/src/main/java/io/cucumber/core/plugin/PrettyFormatter.java">
- *  PrettyFormatter
- * </a>
+ * Original source: [PrettyFormatter](https://github.com/cucumber/cucumber-jvm/blob/release/v7.17.0/cucumber-core/src/main/java/io/cucumber/core/plugin/PrettyFormatter.java)
  */
 
 class SerenityWithCucumberFormatter(out: OutputStream?) : ConcurrentEventListener, ColorAware {
@@ -249,7 +246,7 @@ class SerenityWithCucumberFormatter(out: OutputStream?) : ConcurrentEventListene
             return " "
         }
         val builder = StringBuilder(padding)
-        for (i in 0 until padding) {
+        repeat(padding) {
             builder.append(" ")
         }
         return builder.toString()
@@ -304,10 +301,7 @@ class SerenityWithCucumberFormatter(out: OutputStream?) : ConcurrentEventListene
         const val PLUGIN: String = "io.iohk.atala.automation.cucumber.plugins.SerenityWithCucumberFormatter"
 
         fun relativize(uri: URI): URI {
-            if ("file" != uri.scheme) {
-                return uri
-            }
-            if (!uri.isAbsolute) {
+            if ("file" != uri.scheme || !uri.isAbsolute) {
                 return uri
             }
 

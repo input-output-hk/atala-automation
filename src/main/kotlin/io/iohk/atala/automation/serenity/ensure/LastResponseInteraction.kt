@@ -2,6 +2,7 @@ package io.iohk.atala.automation.serenity.ensure
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.google.gson.JsonSyntaxException
 import com.jayway.jsonpath.JsonPath
 import io.iohk.atala.automation.restassured.CustomGsonObjectMapperFactory
 import net.serenitybdd.annotations.Step
@@ -71,7 +72,7 @@ interface LastResponseInteraction: Interaction {
                     try {
                         gson.fromJson(json, A::class.java)
                         return true
-                    } catch (e: Exception) {
+                    } catch (e: JsonSyntaxException) {
                         return false
                     }
                 }

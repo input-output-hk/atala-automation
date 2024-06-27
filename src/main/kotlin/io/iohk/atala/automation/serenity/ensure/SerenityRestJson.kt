@@ -44,7 +44,7 @@ class SerenityRestJson {
         } else if (bodyJsonArray != null) {
             this.body = bodyJsonArray!!
         } else {
-            throw IllegalStateException("Response type is not JsonObject nor JsonArray")
+            error("Response type is not JsonObject nor JsonArray")
         }
     }
 

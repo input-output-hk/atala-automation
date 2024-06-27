@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.8.21"
     `java-library`
     `maven-publish`
-    id("io.gitlab.arturbosch.detekt") version "1.23.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.6"
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0-rc-1"
     id("org.jetbrains.dokka") version "1.9.20"
     signing
