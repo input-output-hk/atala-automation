@@ -111,7 +111,7 @@ nexusPublishing {
 signing {
     val base64EncodedAsciiArmoredSigningKey: String = System.getenv("BASE64_ARMORED_GPG_SIGNING_KEY_MAVEN") ?: ""
     val signingKeyPassword: String = System.getenv("SIGNING_KEY_PASSWORD") ?: ""
-    if (base64EncodedAsciiArmoredSigningKey.isNotEmpty() && signingKeyPassword.isNotEmpty()) {
+    if (base64EncodedAsciiArmoredSigningKey.isNotEmpty()) {
         useInMemoryPgpKeys(String(Base64.getDecoder().decode(base64EncodedAsciiArmoredSigningKey.toByteArray())), signingKeyPassword)
         sign(publishing.publications)
     }
