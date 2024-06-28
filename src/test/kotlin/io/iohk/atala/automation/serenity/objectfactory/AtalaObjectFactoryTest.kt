@@ -84,7 +84,7 @@ class AtalaObjectFactoryTest : WithMockServer() {
     @Test
     fun `Should parse OffsetDateTime when using AtalaObjectFactory`() {
         AtalaObjectFactory
-        val actor = Actor.named("tester").whoCan(CallAnApi.at("http://localhost"))
+        val actor = Actor.named("tester").whoCan(CallAnApi.at(baseUrl))
         actor.attemptsTo(Get.resource("/offsetdatetime"))
         val date = SerenityRest.lastResponse().get<Date>()
         assertThat(date, notNullValue())

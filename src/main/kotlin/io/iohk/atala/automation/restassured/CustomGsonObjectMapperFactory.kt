@@ -15,10 +15,14 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeParseException
 
 class CustomGsonObjectMapperFactory: GsonObjectMapperFactory {
+    companion object {
+        fun builder(): GsonBuilder {
+            return GsonBuilder()
+                .registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeTypeAdapter())
+        }
+    }
     override fun create(cls: Type?, charset: String?): Gson {
-        return GsonBuilder()
-            .registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeTypeAdapter())
-            .create()
+        return builder().create()
     }
 
     class OffsetDateTimeTypeAdapter : JsonDeserializer<OffsetDateTime>, JsonSerializer<OffsetDateTime> {
