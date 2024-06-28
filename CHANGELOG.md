@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.4.0...atala-automation-v0.5.0) (2024-06-28)
+
+
+### Features
+
+* enhancements ([#15](https://github.com/input-output-hk/atala-automation/issues/15)) ([4ed3ef1](https://github.com/input-output-hk/atala-automation/commit/4ed3ef15e7d75883a448627d676b24be4aa41e72))
+
 # [0.4.0](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.3.2...atala-automation-v0.4.0) (2024-04-30)
 
 
