@@ -15,7 +15,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: release-atala-automation
 
     steps:
       - name: Dokka
