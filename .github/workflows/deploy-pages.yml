@@ -1,4 +1,4 @@
-name: Atala QA pages
+name: Release pages
 
 on:
   workflow_dispatch:
