@@ -1,6 +1,6 @@
 {
   "name": "atala-automation",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Common automation place for all Atala projects",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
