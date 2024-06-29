@@ -1,3 +1,13 @@
+## [0.5.4](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.5.3...atala-automation-v0.5.4) (2024-06-29)
+
+
+### Bug Fixes
+
+* release node version ([#21](https://github.com/input-output-hk/atala-automation/issues/21)) ([a62a6a3](https://github.com/input-output-hk/atala-automation/commit/a62a6a3aef8947d0e2c06e8b0f90dae709e7beb5))
+* release token ([#22](https://github.com/input-output-hk/atala-automation/issues/22)) ([57a51dc](https://github.com/input-output-hk/atala-automation/commit/57a51dc88b45a2e8af7082acc6c985e4d9fe97c3))
+* release workflow ([#20](https://github.com/input-output-hk/atala-automation/issues/20)) ([d35ccc4](https://github.com/input-output-hk/atala-automation/commit/d35ccc4276e341aefa9e9a4a86928323f82a4d3a))
+* workflow enhancements and upgrade ([#19](https://github.com/input-output-hk/atala-automation/issues/19)) ([a511d24](https://github.com/input-output-hk/atala-automation/commit/a511d241b0ffd3ae3013e76592cd6a1626dbe822))
+
 ## [0.5.3](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.5.2...atala-automation-v0.5.3) (2024-06-29)
 
 
