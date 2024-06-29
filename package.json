@@ -47,7 +47,7 @@
             "package-lock.json",
             "gradle.properties"
           ],
-          "message": "chore(release): release atala-automation v${nextRelease.version}\n\n${nextRelease.notes}"
+          "message": "chore(release): release atala-automation v${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }
       ]
     ]

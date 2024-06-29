@@ -25,6 +25,8 @@ jobs:
         if: always()
         with:
           report_paths: build/test-results/**/*.xml
+          include_passed: true
+
 
       - name: Publish Detekt Results
         run: cat build/reports/detekt/detekt.md >> $GITHUB_STEP_SUMMARY
