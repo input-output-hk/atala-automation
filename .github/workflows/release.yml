@@ -1,4 +1,4 @@
-name: Atala QA Release
+name: Release atala-automation
 
 on:
   workflow_dispatch:

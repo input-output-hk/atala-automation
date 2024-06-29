@@ -1,4 +1,4 @@
-name: Atala QA Release
+name: Release pages
 
 on:
   workflow_dispatch:
@@ -15,7 +15,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: release-atala-automation
 
     steps:
       - name: Dokka

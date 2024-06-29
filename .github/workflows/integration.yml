@@ -1,4 +1,4 @@
-name: Atala QA CI
+name: Build and test
 
 concurrency:
   group: ${{ github.head_ref }}${{ github.ref }}-e2e-tests
