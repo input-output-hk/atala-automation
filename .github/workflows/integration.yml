@@ -24,7 +24,7 @@ jobs:
         uses: mikepenz/action-junit-report@v4
         if: always()
         with:
-          files: build/test-results/**/*.xml
+          report_paths: build/test-results/**/*.xml
 
       - name: Publish Detekt Results
         run: cat build/reports/detekt/detekt.md >> $GITHUB_STEP_SUMMARY
