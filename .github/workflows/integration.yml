@@ -14,6 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
       - name: Build and test
         run: ./gradlew build
 
