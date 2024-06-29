@@ -1,3 +1,10 @@
+## [0.5.2](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.5.1...atala-automation-v0.5.2) (2024-06-29)
+
+
+### Bug Fixes
+
+* fixes page deployment ([#17](https://github.com/input-output-hk/atala-automation/issues/17)) ([f8a7473](https://github.com/input-output-hk/atala-automation/commit/f8a74733dd0f077f42ef6624613d8d77b23db183))
+
 ## [0.5.1](https://github.com/input-output-hk/atala-automation/compare/atala-automation-v0.5.0...atala-automation-v0.5.1) (2024-06-28)
 
 
